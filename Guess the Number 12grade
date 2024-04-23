@@ -1,0 +1,69 @@
+import tkinter as tk 
+
+import random
+
+A = random.randint(1,100)
+B = 0
+C = 100 
+D = 0
+
+def fn1():
+    global A,B,C,D,vscore
+    vscore = score.get()
+    if vscore >= C :
+        lblTimes['text'] = '程式錯誤，請重新輸入'
+        lblResult['text'] = '密碼在{0}到{1}之間'.format(B,C)
+    elif vscore <= B :
+        lblTimes['text'] = '程式錯誤，請重新輸入' 
+        lblResult['text'] = '密碼在{0}到{1}之間'.format(B,C)
+    elif vscore > A :
+        C = vscore
+        D = D+1
+        lblResult['text'] = '密碼在{0}到{1}之間'.format(B,C)
+        lblTimes['text'] = '您第{0}次猜的數字是{1}'.format(D,vscore)
+    elif vscore < A :
+        B = vscore
+        D = D+1
+        lblResult['text'] = '密碼在{0}到{1}之間'.format(B,C)
+        lblTimes['text'] = '您第{0}次猜的數字是{1}'.format(D,vscore)
+    else :
+        D = D+1
+        lblResult['text'] = '程式結束'
+        lblTimes['text'] = '您第{0}次猜的數字是{1},恭喜您答對了'.format(D,vscore)
+
+def fn2():
+    global A,B,C,D,vscore
+    A = random.randint(1,100)
+    B = 0
+    C = 100
+    D = 0
+    lblResult['text'] = '密碼在0到100之間'
+    lblTimes['text'] = ''
+    
+def fn3():
+    win.destroy()
+
+win = tk.Tk()
+win.title('終極密碼 313 24 ')
+win.geometry('380x130')
+
+score = tk.IntVar()
+lbl01 = tk.Label(win,width = 10,text = ('終極密碼:'),font = ('標楷體',14))
+lbl02 = tk.Label(win,width = 10,text = ('輸入密碼:'),font = ('標楷體',14))
+txt01 = tk.Entry(win,width = 30,textvariable = score)
+btn01 = tk.Button(win,text = '確定', font = ('標楷體'),command = fn1)
+lblResult = tk.Label(win,width = 30,text = ('密碼在0到100之間'),font = ('標楷體',12))
+lblTimes = tk.Label(win,width = 35,text = (''),font = ('標楷體',12))
+btn02 = tk.Button(win,text = '重玩一次', font = ('標楷體'),command = fn2)
+btn03 = tk.Button(win,text = '結束程式', font = ('標楷體'),command = fn3)
+
+lbl01.grid(row = 0,column = 1)
+lbl02.grid(row = 1,column = 1)
+txt01.grid(row = 1,column = 2)
+btn01.grid(row = 2,column = 1)
+lblResult.grid(row = 0,column = 2)
+lblTimes.grid(row = 2,column = 2)
+btn02.grid(row = 3,column = 1)
+btn03.grid(row = 3,column = 2)
+
+win.mainloop()
