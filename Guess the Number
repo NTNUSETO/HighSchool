@@ -1,0 +1,19 @@
+import random 
+c = random.randint(1,99)
+guess=input('請輸入0~100之間的數字:')
+guess=int(guess)
+a=0
+b=100
+while guess!=c:
+  if guess>b or guess<a or guess==a or guess==b :
+    print('你在幹嘛啊')
+    guess=int(input('我再給你一次機會:'))
+  elif a<guess<c:
+    a=guess
+    print('請輸入',a,'~',b,'之間的數字:')
+    guess=int(input()) 
+  elif b>guess>c:
+    b=guess
+    print('請輸入',a,'~',b,'之間的數字:')
+    guess=int(input())
+print('恭喜答對')
