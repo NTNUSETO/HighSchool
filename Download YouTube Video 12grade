@@ -1,0 +1,91 @@
+from pytube import YouTube
+import tkinter as tk
+from tkinter import messagebox as msgbox 
+import os 
+
+win = tk.Tk()
+win.title("下載Youtube影片")
+win.geometry("420x400")
+
+def clickDown():
+    urlin = ""
+    if(url1.get()==""):
+        msgbox.showwarning('未輸入網址','必須輸入網址!')
+        return
+    
+    else:
+        urlin = url1.get()
+        
+    if(path.get()==''):
+        pathdir = 'c:\\download'
+        
+    else:
+        pathdir = path.get()
+        
+    pathdir = pathdir.replace('\\','\\\\') 
+    
+    yt = YouTube(urlin)
+    
+    if(sel1.get()=='mp4'):
+        yt.streams.filter(subtype = 'mp4',progressive = True).first().download(pathdir)
+    
+    else:
+        out_file = yt.streams.filter(mime_type = 'audio/mp4').first().download(pathdir)
+        base,ext = os.path.splitext(out_file)
+        new_file = base + '.mp3'
+        os.rename(out_file,new_file)
+    
+    msgbox.showinfo('檔案下載','下載完成!')
+    
+url1 = tk.StringVar()
+
+path = tk.StringVar()
+
+sel1 = tk.StringVar()
+
+sel1.set('mp4')
+
+lbl_title = tk.Label(win,text = "Youtube影片下載",font = ("標楷體",16))
+lbl_title.place(x = 120,y = 10)
+
+lbl01 = tk.Label(win,text = "請貼上網址:",font = ("標楷體",12))
+lbl01.place(x = 20,y = 50)
+
+lbl02 = tk.Label(win,text = "存檔路徑:")
+lbl02.place(x = 20,y = 150)
+
+lbl03 = tk.Label(win,text = "預設存檔路徑為Download資料夾")
+lbl03.place(x = 20,y = 180)
+
+lbl04 = tk.Label(win,text = '選擇格式:')
+lbl04.place(x = 20,y = 100)
+
+lbl05 = tk.Label(win,text = "班級 : 三年十三班",font = ("標楷體",14))
+lbl05.place(x = 120,y = 250)
+
+lbl06 = tk.Label(win,text = "座號 : 24號",font = ("標楷體",14))
+lbl06.place(x = 120,y = 270)
+
+lbl07 = tk.Label(win,text = "姓名 : 黃振碩",font = ("標楷體",14))
+lbl07.place(x = 120,y = 290)
+
+lbl08 = tk.Label(win,text = "本程式僅供作業使用，請勿用於商業用途",font = ("標楷體",14),fg = 'red')
+lbl08.place(x = 30,y = 330)
+
+entry_url = tk.Entry(win,width = 30,textvariable = url1)
+entry_url.place(x = 120,y = 50)
+
+entryPath = tk.Entry(win,textvariable = path)
+entryPath.config(width = 30)
+entryPath.place(x = 120,y = 150)
+
+btnDown = tk.Button(win,text = '下載影片',command = clickDown)
+btnDown.place(x = 180,y = 210)
+
+Video = tk.Radiobutton(win,text = '影片',variable = sel1,value = 'mp4')
+Video.place(x = 120,y = 100)
+                       
+MP3 = tk.Radiobutton(win,text = '聲音',variable = sel1,value = 'audio')
+MP3.place(x = 180,y = 100)
+
+win.mainloop()
